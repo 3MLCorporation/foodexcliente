@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { StyleSheet, Image} from 'react-native';
 import { Container, Header, Left, Body, Right, Title, Content, Button, Text, Form, Item, Input, Label } from 'native-base';
-import {ModuloFacebookLogin} from 'ract-facebook-login';
+import { ModuloFacebookLogin } from 'ract-facebook-login';
+import { GoogleLogin } from 'react-google-login-component';
 
 import firebase from 'react-native-firebase';
 
@@ -79,13 +80,27 @@ export default class Login extends Component{
 						<Text>Não tem uma conta? CADASTRE-SE</Text>
 					</Button>
 
-                    <FacebookLoginButton onClick={() => this.refs.facebooklogin.click()}>
+                    <facebookLoginButton onPress={() => this.refs.facebooklogin.click()}>
+                        icon={<i className="fa fa-facebook" style{{marginLeft:'5px'}}>
+                        </i>}
                         <span>Entrar com Facebook</span>
                         <ModuloFacebookLogin ref={facebooklogin}
-                                             appId={999999999999}
+                                             appId={facebookAppId}
                                              fields={name, email, picture}
-                                             callback={this.reponseFacebook} />
-                    </FacebookLoginButton>
+                                             callback={this.props.SocialSignUp} />
+                    </facebookLoginButton>
+
+                    <googleLoginButton
+                        clientId={googleClientId}
+                        onSuccess={this.props.SocialSignUp}
+                        onFailure={this.props.SocialSignUp}
+                        className="btnGoogle"
+                    >
+                        <i className="fa fa-google-plus" style={{ marginLeft:
+                                '5px' }}/>
+                        <span>&nbsp;&nbsp;Login com Google</span>
+                    </googleLoginButton>
+
     			</Content>
             </Container>
         )
@@ -119,13 +134,23 @@ const estilo = StyleSheet.create({
 
 	botao:{
 		backgroundColor: '#f78f03'
-	}
+	},
 
 	facebookLoginButton:{
         backgroundColor: '#37549A',
         color: '#fff',
         boderRadius: 30,
         fontsize: 15,
+        padding: 14,
+        fontWeight: 'bold',
+        cursor: 'point'
+    },
+
+    googleLoginButton:{
+        backgroundColor: '#db3236',
+        color: '#fff',
+        fontsize: 15,
+        borderRadius: 30,
         padding: 14,
         fontWeight: 'bold',
         cursor: 'point'
