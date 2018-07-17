@@ -8,7 +8,7 @@ export default class Cadastro extends Component{
 
     static navigationOptions = {
         header: (
-            <Header androidStatusBarColor={'#f78f03'}>
+            <Header style={ {'backgroundColor' : '#f78f03'}} androidStatusBarColor={'#BF6B03'}>
                 <Left/>
                 <Body>
                 <Title>FoodEx</Title>
@@ -18,29 +18,52 @@ export default class Cadastro extends Component{
         )
     };
 
+    constructor() {
+        super();
+        this.state = {
+            email: '',
+            password: '',
+        };
+    }
+
+    _updateEmail = email => {
+        this.setState({ email });
+    };
+
+    _updatePassword = password => {
+        this.setState({ password });
+    };
+
+    _registerUser = () => {
+        const { email, password } = this.state;
+
+        firebase.auth().createUserAndRetrieveDataWithEmailAndPassword(email.trim(), password)
+            .catch((error) => {
+                console.error(error);
+            });
+    };
+
 	render() {
         return (
             <Container>
                 <Content padder contentContainerStyle={estilo.principal}>
                     <Form>
                         <Item floatingLabel>
-                            <Label>Login</Label>
-                            <Input />
-                        </Item>
-                        <Item floatingLabel>
                             <Label>Email</Label>
-                            <Input />
+                            <Input onChangeText={this._updateEmail}
+                                   value={this.state.email}/>
                         </Item>
                         <Item floatingLabel>
                             <Label>Senha</Label>
-                            <Input secureTextEntry={true}/>
+                            <Input secureTextEntry={true} onChangeText={this._updatePassword}
+                                   value={this.state.password}/>
                         </Item>
                         <Item floatingLabel>
-                            <Label>Confirmar Senha</Label>
+                            <Label>Confirmar senha</Label>
                             <Input secureTextEntry={true}/>
                         </Item>
                     </Form>
-                <Button full style={estilo.botao}>
+                <Button onPress={this._registerUser} full style={estilo.botao}>
                     <Text>CADASTRAR</Text>
                 </Button>
                 </Content>

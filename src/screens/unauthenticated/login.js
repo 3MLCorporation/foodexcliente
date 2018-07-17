@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import { StyleSheet, Image} from 'react-native';
 import { Container, Header, Left, Body, Right, Title, Content, Button, Text, Form, Item, Input, Label } from 'native-base';
-import { ModuloFacebookLogin } from 'ract-facebook-login';
-import { GoogleLogin } from 'react-google-login-component';
 
 import firebase from 'react-native-firebase';
 
@@ -10,7 +8,7 @@ export default class Login extends Component{
 
     static navigationOptions = {
        header: (
-           <Header androidStatusBarColor={'#f78f03'}>
+           <Header style={ {'backgroundColor' : '#f78f03'}} androidStatusBarColor={'#BF6B03'}>
                <Left/>
                <Body>
                <Title>FoodEx</Title>
@@ -40,11 +38,12 @@ export default class Login extends Component{
         // extract the values from state
         const { email, password } = this.state;
 
-        firebase.auth().signInAndRetrieveDataWithEmailAndPassword(email, password)
+        firebase.auth().signInAndRetrieveDataWithEmailAndPassword(email.trim(), password)
             .catch((error) => {
                 console.error(error);
             });
     };
+
 
     _cadastro = () => {
         this.props.navigation.navigate('Cadastro');
@@ -79,28 +78,6 @@ export default class Login extends Component{
 					<Button onPress={this._cadastro} transparent dark>
 						<Text>Não tem uma conta? CADASTRE-SE</Text>
 					</Button>
-
-                    <facebookLoginButton onPress={() => this.refs.facebooklogin.click()}>
-                        icon={<i className="fa fa-facebook" style{{marginLeft:'5px'}}>
-                        </i>}
-                        <span>Entrar com Facebook</span>
-                        <ModuloFacebookLogin ref={facebooklogin}
-                                             appId={facebookAppId}
-                                             fields={name, email, picture}
-                                             callback={this.props.SocialSignUp} />
-                    </facebookLoginButton>
-
-                    <googleLoginButton
-                        clientId={googleClientId}
-                        onSuccess={this.props.SocialSignUp}
-                        onFailure={this.props.SocialSignUp}
-                        className="btnGoogle"
-                    >
-                        <i className="fa fa-google-plus" style={{ marginLeft:
-                                '5px' }}/>
-                        <span>&nbsp;&nbsp;Login com Google</span>
-                    </googleLoginButton>
-
     			</Content>
             </Container>
         )
@@ -133,26 +110,8 @@ const estilo = StyleSheet.create({
 	},
 
 	botao:{
-		backgroundColor: '#f78f03'
-	},
+		backgroundColor: '#f78f03',
 
-	facebookLoginButton:{
-        backgroundColor: '#37549A',
-        color: '#fff',
-        boderRadius: 30,
-        fontsize: 15,
-        padding: 14,
-        fontWeight: 'bold',
-        cursor: 'point'
-    },
+	}
 
-    googleLoginButton:{
-        backgroundColor: '#db3236',
-        color: '#fff',
-        fontsize: 15,
-        borderRadius: 30,
-        padding: 14,
-        fontWeight: 'bold',
-        cursor: 'point'
-    }
 });
