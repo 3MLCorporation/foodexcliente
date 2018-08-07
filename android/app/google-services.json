@@ -46,6 +46,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "113551968383-vt50pi6ci9a6rtael2tdcb18orqhvh5v.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.michelthomas.foodex",
+            "certificate_hash": "15f08b19efa266d15d5934f70a092c935f85dd75"
+          }
+        },
+        {
           "client_id": "113551968383-96a3rcuai1kmfedpvn8eocph0okjnilt.apps.googleusercontent.com",
           "client_type": 3
         }
@@ -60,8 +68,13 @@
           "status": 1
         },
         "appinvite_service": {
-          "status": 1,
-          "other_platform_oauth_client": []
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "113551968383-96a3rcuai1kmfedpvn8eocph0okjnilt.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         },
         "ads_service": {
           "status": 2

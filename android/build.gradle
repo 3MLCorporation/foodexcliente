@@ -21,6 +21,7 @@ buildscript {
 allprojects {
     repositories {
         mavenLocal()
+        maven {url "https://maven.google.com"} // <--- this should be added and should be above jcenter
         jcenter()
         google()
         maven {

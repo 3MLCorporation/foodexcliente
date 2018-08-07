@@ -184,6 +184,11 @@ dependencies {
 
   implementation fileTree(dir: "libs", include: ["*.jar"])
   implementation "com.facebook.react:react-native:+"  // From node_modules
+
+  implementation(project(":react-native-google-signin")){
+          exclude group: "com.google.android.gms" // very important
+  }
+  implementation 'com.google.android.gms:play-services-auth:15.0.1' // should be at least 15.0.0 to work with most recent APIS
 }
 
 // Run this once to be able to run the application with BUCK
