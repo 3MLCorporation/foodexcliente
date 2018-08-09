@@ -4,6 +4,7 @@ import { Container, Header, Left, Body, Right, Title, Content, Button, Text, For
 
 import firebase from 'react-native-firebase';
 import { GoogleSignin } from 'react-native-google-signin';
+import { AccessToken, LoginManager } from 'react-native-fbsdk';
 
 export default class Login extends Component{
 
@@ -66,6 +67,35 @@ export default class Login extends Component{
       console.error(e);
     }
   };
+
+  _facebookLogin = async () => {
+    try {
+      const result = await LoginManager.logInWithReadPermissions(['public_profile', 'email']);
+
+      if (result.isCancelled) {
+        throw new Error('User cancelled request'); // Handle this however fits the flow of your app
+      }
+
+      console.log(`Login success with permissions: ${result.grantedPermissions.toString()}`);
+
+      // get the access token
+      const data = await AccessToken.getCurrentAccessToken();
+
+      if (!data) {
+        throw new Error('Something went wrong obtaining the users access token'); // Handle this however fits the flow of your app
+      }
+
+      // create a new firebase credential with the token
+      const credential = firebase.auth.FacebookAuthProvider.credential(data.accessToken);
+
+      // login with credential
+      await firebase.auth().signInAndRetrieveDataWithCredential(credential);
+
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
   _cadastro = () => {
     this.props.navigation.navigate('Cadastro');
   };
@@ -98,6 +128,10 @@ export default class Login extends Component{
 
           <Button onPress={this._googleLogin} full style={estilo.botao}>
             <Text>Login with Google</Text>
+          </Button>
+
+          <Button onPress={this._facebookLogin} full style={estilo.botao}>
+            <Text>Login with Facebook</Text>
           </Button>
 
           <Button onPress={this._cadastro} transparent dark>
