@@ -4,7 +4,18 @@ import { Container, Header, Left, Body, Right, Title, Content, Button, Text} fro
 
 import firebase from 'react-native-firebase';
 import MapView from 'react-native-maps';
+
+var React = require('react');
 var someMarkerImage = require("./images/marker.png");
+var latitude = 49.2928146;
+var longitude = -123.1374535;
+var {
+  AppRegistry,
+  StyleSheet,
+  Image,
+  Text
+} = ReactNative;
+
 
 class Principal extends Component{
 
