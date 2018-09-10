@@ -4,6 +4,7 @@ import { Container, Header, Left, Body, Right, Title, Content, Button, Text} fro
 
 import firebase from 'react-native-firebase';
 import MapView from 'react-native-maps';
+var someMarkerImage = require("./images/marker.png");
 
 class Principal extends Component{
 
@@ -78,9 +79,18 @@ class Principal extends Component{
                   {region && (
                     <MapView.Marker
                       coordinate={ region }
-                      title={'Aiii dento'}
-                      image={{uri: "http://www.placetrump.us/30/20"}}
+                      title={'Fornecedor'}
+                      key={data.name}
                     >
+	                    <Image
+	                    style={{
+	                      width: 40,
+	                      height: 50,
+	                      borderColor: "#0000FF",
+	                      borderWidth: 1,
+	                    }}
+	                    source={someMarkerImage}
+	                    />
                     </MapView.Marker>
                   )}
 
