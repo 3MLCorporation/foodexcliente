@@ -1,20 +1,12 @@
 import React, { Component } from 'react';
-import { StyleSheet, View} from 'react-native';
+import { StyleSheet, View, Image} from 'react-native';
 import { Container, Header, Left, Body, Right, Title, Content, Button, Text} from 'native-base';
 
 import firebase from 'react-native-firebase';
 import MapView from 'react-native-maps';
 
-var React = require('react');
-var someMarkerImage = require("./images/marker.png");
-var latitude = 49.2928146;
-var longitude = -123.1374535;
-var {
-  AppRegistry,
-  StyleSheet,
-  Image,
-  Text
-} = ReactNative;
+import markerPng from '../../images/marker.png';
+
 
 
 class Principal extends Component{
@@ -34,7 +26,8 @@ class Principal extends Component{
     constructor() {
       super();
       this.state = {
-          usuario : ''
+          usuario : '',
+          fornecedores: [],
       };
     }
 
@@ -64,6 +57,33 @@ class Principal extends Component{
       )
     }
 
+    componentDidMount(){
+      firebase.firestore().collection('fornecedores').get().then((querySnapshot) => {
+        const fornecedores = [];
+        querySnapshot.forEach((doc) => {
+          // doc.data() is never undefined for query doc snapshots
+          console.log(doc.id, " => ", doc.data());
+
+          const {name, coords} = doc.data();
+
+          fornecedores.push({
+            key: doc.id,
+            name: name,
+            coords: coords,
+          });
+
+
+        }
+        );
+
+        this.setState({
+          fornecedores: fornecedores,
+        });}).catch((error) => {
+        console.error(error);
+      });
+
+    }
+
     _logout = () => {
       firebase.auth().signOut()
         .catch((error) => {
@@ -75,6 +95,7 @@ class Principal extends Component{
      /* const { region } = this.props;
       console.log('Region = ' + region);*/
       const {region, position} = this.state;
+      const fornecedoresMarkers = this.state.fornecedores;
 
         return(
           <Container>
@@ -82,6 +103,7 @@ class Principal extends Component{
               {this.state.loading ? (
                 <Loading />
               ) : (
+
                 <MapView
                   style={styles.map}
                   region={region}
@@ -90,19 +112,19 @@ class Principal extends Component{
                   {region && (
                     <MapView.Marker
                       coordinate={ region }
-                      title={'Fornecedor'}
-                      key={data.name}
-                    >
-	                    <Image
-	                    style={{
-	                      width: 40,
-	                      height: 50,
-	                      borderColor: "#0000FF",
-	                      borderWidth: 1,
-	                    }}
-	                    source={someMarkerImage}
-	                    />
-                    </MapView.Marker>
+                      title={'Você'}
+                    />
+                  )}
+
+                  {fornecedoresMarkers && (
+                    fornecedoresMarkers.map(fornecedor => (
+                      <MapView.Marker
+                        coordinate={fornecedor.coords}
+                        title={fornecedor.name}
+                        key={fornecedor.id}
+                        image={markerPng}
+                      />
+                    ))
                   )}
 
                 </MapView>
