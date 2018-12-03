@@ -31,7 +31,7 @@
     "react-native-fbsdk": "^0.7.0",
     "react-native-firebase": "^4.1.0",
     "react-native-google-signin": "^1.0.0-rc2",
-    "react-native-maps": "^0.21.0",
+    "react-native-maps": "^0.22.1",
     "react-navigation": "^2.0.0",
     "react-redux": "^5.0.7",
     "redux": "^4.0.0"
