@@ -26,11 +26,15 @@ import {
   Grid,
   Row,
   Col,
+  Card,
+  CardItem,
+  Thumbnail,
 } from 'native-base';
 import { StyleSheet, Image, View, TouchableNativeFeedback} from 'react-native';
 import firebase from 'react-native-firebase';
 import {estilo_global} from "../../css/style_global";
 import {estilo_perfil} from "../../css/perfil";
+import empresaPequena from "../../images/icons8-empresa-de-pequena-porte-26.png";
 
 export default class FinalizarPedido extends Component{
   constructor() {
@@ -80,8 +84,10 @@ export default class FinalizarPedido extends Component{
       fornecedorId: fornecedor.id,
       itemId: item.id,
       quantidade: quantidade,
+      valorTotal: (item.valor * quantidade),
     }).then((doc) => {
       console.log('Pedido cadastrado com ID: ' + doc.id);
+      alert('Pedido realizado com sucesso');
       this.props.navigation.navigate('Principal');
     }).catch(function(error) {
       console.error("Error adding document: ", error);
@@ -97,17 +103,40 @@ export default class FinalizarPedido extends Component{
         <Loading/>
       :
 
-          <Content>
-            <Text>{fornecedor.nome}</Text>
-            <H3>{item.nome}</H3>
-            <Text>{item.descricao}</Text>
-            <Text style={{color: 'green', fontWeight: 'bold'}}>{item.valor}</Text>
+          <Content scrollEnabled={false}>
             <Grid>
-              <Row>
-                <Button onPress={this._diminuirQuantidade}><Text>-</Text></Button>
-                <Text>{quantidade}</Text>
-                <Button onPress={this._aumentarQuantidade}><Text>+</Text></Button>
+              <Row size={1} style={{justifyContent: 'center',
+                alignItems: 'center',}}>
+                <Card style={{margin: 16}}>
+                  <CardItem>
+                    {/*<Thumbnail  source={{uri: empresaPequena}}/>*/}
+                    <Text>{fornecedor.nome}</Text>
+                  </CardItem>
+                </Card>
               </Row>
+
+              <Row  size={3} style={{justifyContent: 'center',
+                alignItems: 'center',}}>
+                <Card style={{}}>
+                  <H1 style={{padding: 8, marginTop: 22 }}>{item.nome}</H1>
+                  <Text style={{padding: 8, color: 'gray'}}>{item.descricao}</Text>
+                  <H3 style={{color: 'green', fontWeight: 'bold', padding:8, marginTop: 40}}>{'R$ ' + item.valor}</H3>
+                </Card>
+              </Row>
+
+              <Row size={4}>
+                <Grid style={{height: 200,justifyContent: 'center',
+                  alignItems: 'center'}}>
+                  <Row/>
+                  <Row >
+                    <Button rounded  transparent onPress={this._diminuirQuantidade}><H1>-</H1></Button>
+                    <H1 style={{color: 'green', paddingTop: 7, paddingHorizontal: 30}}>{quantidade}</H1>
+                    <Button rounded transparent onPress={this._aumentarQuantidade}><H1>+</H1></Button>
+                  </Row>
+                  <Row/>
+                </Grid>
+              </Row>
+
             </Grid>
           </Content>
 
@@ -115,8 +144,8 @@ export default class FinalizarPedido extends Component{
         {loading ? (<View/>) :
           <Footer style={{backgroundColor: '#f78f03'}}>
             <FooterTab>
-              <Button onPress={this._finalizarPedido}>
-                <Text>{'Comprar ' + quantidade + ' por ' + 'R$ ' + valorPedido}</Text>
+              <Button style={{backgroundColor: '#f78f03'}} onPress={this._finalizarPedido}>
+                <H3 style={{fontWeight: 'bold'}}>{'Comprar ' + quantidade + ' por ' + 'R$ ' + valorPedido}</H3>
               </Button>
             </FooterTab>
           </Footer>

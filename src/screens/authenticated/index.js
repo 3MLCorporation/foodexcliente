@@ -1,4 +1,4 @@
-import { StackNavigator } from 'react-navigation';
+import { createStackNavigator } from 'react-navigation';
 import React from "react";
 
 import {NavigationOptionsLog} from "../../global_components/NavigationOptionsLog";
@@ -6,8 +6,9 @@ import {NavigationOptionsLog} from "../../global_components/NavigationOptionsLog
 import Principal from './principal';
 import Cardapio from './cardapio';
 import FinalizarPedido from './finalizarPedido';
+import Pedidos from './pedidos';
 
-export default StackNavigator({
+export default createStackNavigator({
   Principal: {
     screen: Principal,
     navigationOptions: () => ({
@@ -24,6 +25,12 @@ export default StackNavigator({
     screen: FinalizarPedido,
     navigationOptions: () => ({
       header: <NavigationOptionsLog titulo="Finalizar pedido"/>
+    }),
+  },
+  Pedidos: {
+    screen: Pedidos,
+    navigationOptions: () => ({
+      header: <NavigationOptionsLog titulo="Histórico de pedidos"/>
     }),
   },
 });

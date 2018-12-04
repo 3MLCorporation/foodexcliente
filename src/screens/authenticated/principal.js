@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import { StyleSheet, View, Image} from 'react-native';
-import { Container, Header, Left, Body, Right, Title, Content, Button, Text, Spinner} from 'native-base';
+import {
+  Container, Header, Left, Body, Right, Title, Content, Button, Text, Spinner, FooterTab,
+  Footer, H3,
+} from 'native-base';
 
 import firebase from 'react-native-firebase';
 import MapView, {Callout} from 'react-native-maps';
@@ -133,6 +136,11 @@ class Principal extends Component{
     console.log('nao foi');
   };
 
+  _pedidos = () =>{
+    console.log('PEDIDOS');
+    this.props.navigation.navigate('Pedidos');
+  };
+
     render(){
      /* const { region } = this.props;
       console.log('Region = ' + region);*/
@@ -186,8 +194,17 @@ class Principal extends Component{
                     )}
 
                   </MapView>
+
                 </View>
+
               )}
+            <Footer style={{backgroundColor: '#f78f03'}}>
+              <FooterTab>
+                <Button style={{backgroundColor: '#f78f03'}} onPress={this._pedidos}>
+                  <H3 style={{fontWeight: 'bold'}}>Pedidos</H3>
+                </Button>
+              </FooterTab>
+            </Footer>
           </Container>
         );
     }

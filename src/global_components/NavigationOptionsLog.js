@@ -21,12 +21,12 @@ export class NavigationOptionsLog extends Component {
 
   render () {
     return (
-      <Header style={estilo.header}  androidStatusBarColor='#BF6B03'>
+      <Header style={estilo.header}  androidStatusBarColor='#bf6b03' noLedt>
         <Body style={{marginLeft: 16}}>
         <Title>{this.props.titulo}</Title>
         </Body>
         <Right>
-          <Button hasText transparent onPress={this._logout}>
+          <Button rounded hasText transparent onPress={this._logout}>
             <Text>Logout</Text>
           </Button>
         </Right>
